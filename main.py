@@ -23,15 +23,15 @@ with open("words.txt", "r") as file:
                     if example is not None:
                         print(example.find("em").getText())
 
-                sub_definitions = definition.find("ol")
-                if sub_definitions is not None:
-                    for sub_index, sub_def in enumerate(
-                            sub_definitions.find_all("li", recursive=False)):
-                        print(
-                            f"{index + 1}.{sub_index + 1}. {sub_def.find('span', class_='ind').getText()}")
+                    sub_definitions = definition.find("ol")
+                    if sub_definitions is not None:
+                        for sub_index, sub_def in enumerate(
+                                sub_definitions.find_all("li", recursive=False)):
+                            print(
+                                f"{index + 1}.{sub_index + 1}. {sub_def.find('span', class_='ind').getText()}")
 
-                        example = sub_def.find("div", class_="ex")
-                        if example is not None:
-                            print(example.find("em").getText())
+                            example = sub_def.find("div", class_="ex")
+                            if example is not None:
+                                print(example.find("em").getText())
         else:
             sys.stderr.write(f"{word.capitalize()} not found. Maybe check the spelling and try again.")

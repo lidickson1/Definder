@@ -3,6 +3,14 @@ import shutil
 import sys
 from bs4 import BeautifulSoup
 
+
+def get_meaning(definition):
+    meaning = definition.find('span', class_='ind')
+    if meaning is None:
+        meaning = definition.find('div', class_='crossReference')
+    return meaning.getText()
+
+
 with open("words.txt", "r") as file:
     for word in file.readlines():
         word = word.rstrip('\n')
@@ -17,7 +25,7 @@ with open("words.txt", "r") as file:
 
                 for index, definition in enumerate(
                         pos.find("ul", class_="semb").find_all("li", recursive=False)):
-                    print(f"{index + 1}. {definition.find('span', class_='ind').getText()}")
+                    print(f"{index + 1}. {get_meaning(definition)}")
 
                     example = definition.find("div", class_="ex")
                     if example is not None:
@@ -28,7 +36,7 @@ with open("words.txt", "r") as file:
                         for sub_index, sub_def in enumerate(
                                 sub_definitions.find_all("li", recursive=False)):
                             print(
-                                f"{index + 1}.{sub_index + 1}. {sub_def.find('span', class_='ind').getText()}")
+                                f"{index + 1}.{sub_index + 1}. {get_meaning(sub_def)}")
 
                             example = sub_def.find("div", class_="ex")
                             if example is not None:
